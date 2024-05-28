@@ -21,7 +21,7 @@ int* create_int(int value) {
 }
 
 void test_set_from_vector(void) {
-	Vector vec_test= vector_create(0, free);
+	Vector vec_test= vector_create(0, NULL);
 	vector_insert_last(vec_test, create_int(2));
 	vector_insert_last(vec_test, create_int(1));
 	vector_insert_last(vec_test, create_int(3));
@@ -32,7 +32,7 @@ void test_set_from_vector(void) {
 	vector_insert_last(vec_test, create_int(0));
 	TEST_ASSERT(set_size(test_set)==4);
 
-	TEST_ASSERT(set_node_value(test_set, set_first(test_set))==0);// τσεκάρω για διάταξη
+	TEST_ASSERT(*(int*)set_node_value(test_set, set_first(test_set))==0);// τσεκάρω για διάταξη
 	vector_destroy(vec_test);
 	set_destroy(test_set);
 
