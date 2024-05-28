@@ -1,0 +1,28 @@
+name: run-tests
+on: [push]
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: make UsingADTSet_BST_set_utils_test
+        run: cd tests && make UsingADTSet_BST_set_utils_test
+        continue-on-error: true
+
+      - name: Run UsingADTSet_BST_set_utils_test
+        run: (cd tests && ./UsingADTSet_BST_set_utils_test) || true
+
+      - name: make UsingADTSet_BTree_set_utils_test
+        run: cd tests && make UsingADTSet_BTree_set_utils_test
+        continue-on-error: true
+
+      - name: Run UsingADTSet_BTree_set_utils_test
+        run: (cd tests && ./UsingADTSet_BTree_set_utils_test) || true
+
+      - name: make UsingBinarySearchTree_set_utils_test
+        run: cd tests && make UsingBinarySearchTree_set_utils_test
+        continue-on-error: true
+
+      - name: Run UsingBinarySearchTree_set_utils_test
+        run: (cd tests && ./UsingBinarySearchTree_set_utils_test) || true
