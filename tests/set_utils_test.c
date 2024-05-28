@@ -9,8 +9,32 @@
 
 #include "set_utils.h"
 
+int compare_ints(Pointer a, Pointer b) {
+	return *(int*)a - *(int*)b;
+}
+
+// Επιστρέφει έναν ακέραιο σε νέα μνήμη με τιμή value
+int* create_int(int value) {
+	int* p = malloc(sizeof(int));
+	*p = value;
+	return p;
+}
 
 void test_set_from_vector(void) {
+	Vector vec_test= vector_create(0, free);
+	vector_insert_last(vec_test, create_int(2));
+	vector_insert_last(vec_test, create_int(1));
+	vector_insert_last(vec_test, create_int(3));
+	vector_insert_last(vec_test, create_int(0));
+	Set test_set= set_from_vector(vec_test, compare_ints);
+	TEST_ASSERT(test_set != NULL);
+	TEST_ASSERT(set_size(test_set)==4);
+	vector_insert_last(vec_test, create_int(0));
+	TEST_ASSERT(set_size(test_set)==4);
+
+	TEST_ASSERT(set_node_value(test_set, set_first(test_set))==0);// τσεκάρω για διάταξη
+	vector_destroy(vec_test);
+	set_destroy(test_set);
 
 }
 

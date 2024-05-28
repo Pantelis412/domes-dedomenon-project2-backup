@@ -10,10 +10,12 @@
 #include "set_utils.h"
 
 
-
-
 Set set_from_vector(Vector vec, CompareFunc compare) {
-	return NULL;
+	Set set = set_create(compare, free);
+	for(int i=0; i<vector_size(vec); i++){
+		set_insert(set, vector_get_at(vec, i));
+	}
+	return set;
 }
 
 Vector set_to_vector(Set set) {
