@@ -19,7 +19,13 @@ Set set_from_vector(Vector vec, CompareFunc compare) {
 }
 
 Vector set_to_vector(Set set) {
-	return NULL;
+	Vector vector = vector_create(set_size(set), free);
+	SetNode setnode= SET_BOF;
+	for(int i=0; i<set_size(set); i++){
+		setnode=set_next(set, setnode);
+		vector_insert_last(vector, set_node_value(set, setnode));
+	}
+	return vector;
 }
 
 void set_traverse(Set set, TraverseFunc f) {
