@@ -6,7 +6,6 @@
 //////////////////////////////////////////////////////////////////
 #include <stdlib.h>
 #include "acutest.h"			// Απλή βιβλιοθήκη για unit testing
-
 #include "set_utils.h"
 
 int compare_ints(Pointer a, Pointer b) {
@@ -19,6 +18,11 @@ int* create_int(int value) {
 	*p = value;
 	return p;
 }
+
+int sum=0;
+void f(Set set, Pointer value){
+		sum+=*(int*)value;
+		}
 
 void test_set_from_vector(void) {
 	Vector vec_test= vector_create(0, NULL);
@@ -54,7 +58,14 @@ void test_set_to_vector(void) {
 }
 
 void test_set_traverse(void) {
-
+	Set set= set_create(compare_ints, free);
+	set_insert(set, create_int(1));
+	set_insert(set, create_int(4));
+	set_insert(set, create_int(9));
+	set_insert(set, create_int(12));
+	set_traverse(set, f);
+	TEST_ASSERT(sum==26);
+	set_destroy(set);
 }
 
 void test_set_merge(void) {

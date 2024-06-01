@@ -29,7 +29,9 @@ Vector set_to_vector(Set set) {
 }
 
 void set_traverse(Set set, TraverseFunc f) {
-
+	for( SetNode node=set_first(set); node!= SET_EOF; node= set_next(set, node)){
+		f(set, set_node_value(set, node));
+	}
 }
 
 Set set_merge(Set set1, Set set2, CompareFunc compare) {
