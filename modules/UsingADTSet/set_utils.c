@@ -35,7 +35,31 @@ void set_traverse(Set set, TraverseFunc f) {
 }
 
 Set set_merge(Set set1, Set set2, CompareFunc compare) {
-	return NULL;
+	Set set= set_create(compare, NULL);
+	SetNode node1=set_first(set1), node2=set_first(set2);
+	while(node1 != SET_EOF && node2 != SET_EOF ){
+		if(compare(set_node_value(set1, node1), set_node_value(set2, node2)) <= 0 ){
+			set_insert(set, set_node_value(set1, node1));
+			node1=set_next(set1, node1);
+		}
+		else{
+			set_insert(set, set_node_value(set2, node2));
+			node2=set_next(set2, node2);
+		}
+	}
+	if( node1== SET_EOF){
+		while(node2 != SET_EOF ){
+		set_insert(set, set_node_value(set2, node2));
+		node2=set_next(set2, node2);
+		}
+	}
+	else{
+		while(node1 != SET_EOF ){
+		set_insert(set, set_node_value(set1, node1));
+		node1=set_next(set1, node1);
+		}
+	}
+	return set;
 }
 
 Pointer set_find_k_smallest(Set set, int k) {

@@ -69,7 +69,23 @@ void test_set_traverse(void) {
 }
 
 void test_set_merge(void) {
+	Set set1= set_create(compare_ints, free);
+	set_insert(set1, create_int(1));
+	set_insert(set1, create_int(4));
+	set_insert(set1, create_int(9));
+	set_insert(set1, create_int(12));
 
+	Set set2= set_create(compare_ints, free);
+	set_insert(set2, create_int(3));
+	set_insert(set2, create_int(5));
+	set_insert(set2, create_int(9));
+	set_insert(set2, create_int(14));
+	Set set = set_merge(set1, set2, compare_ints);
+	TEST_ASSERT(set != NULL);
+	TEST_ASSERT(set_size(set)==7);
+	set_destroy(set1);
+	set_destroy(set2);
+	set_destroy(set);
 }
 
 void test_set_find_k_smallest(void) {
