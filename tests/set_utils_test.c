@@ -26,12 +26,10 @@ void test_set_from_vector(void) {
 	vector_insert_last(vec_test, create_int(1));
 	vector_insert_last(vec_test, create_int(3));
 	vector_insert_last(vec_test, create_int(0));
+	vector_insert_last(vec_test, create_int(0));
 	Set test_set= set_from_vector(vec_test, compare_ints);
 	TEST_ASSERT(test_set != NULL);
 	TEST_ASSERT(set_size(test_set)==4);
-	vector_insert_last(vec_test, create_int(0));
-	TEST_ASSERT(set_size(test_set)==4);
-
 	TEST_ASSERT(*(int*)set_node_value(test_set, set_first(test_set))==0);// τσεκάρω για διάταξη
 	vector_destroy(vec_test);
 	set_destroy(test_set);
@@ -52,9 +50,7 @@ void test_set_to_vector(void) {
 	set_destroy(test_set);
 	TEST_ASSERT(vec_new != NULL);
 	TEST_ASSERT(vector_size(vec_new) == 4);
-
-
-
+	vector_destroy(vec_new);
 }
 
 void test_set_traverse(void) {

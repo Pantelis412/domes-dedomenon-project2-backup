@@ -19,11 +19,11 @@ Set set_from_vector(Vector vec, CompareFunc compare) {
 }
 
 Vector set_to_vector(Set set) {
-	Vector vector = vector_create(set_size(set), free);
-	SetNode setnode= SET_BOF;
+	Vector vector = vector_create(0, NULL);
+	SetNode setnode= set_first(set);
 	for(int i=0; i<set_size(set); i++){
-		setnode=set_next(set, setnode);
 		vector_insert_last(vector, set_node_value(set, setnode));
+		setnode=set_next(set, setnode);		
 	}
 	return vector;
 }
