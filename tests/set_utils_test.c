@@ -83,6 +83,7 @@ void test_set_merge(void) {
 	Set set = set_merge(set1, set2, compare_ints);
 	TEST_ASSERT(set != NULL);
 	TEST_ASSERT(set_size(set)==7);
+	TEST_ASSERT(*(int*)set_node_value(set, set_first(set))==1);// τσεκάρω για διάταξη
 	set_destroy(set1);
 	set_destroy(set2);
 	set_destroy(set);
