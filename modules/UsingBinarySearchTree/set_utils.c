@@ -46,6 +46,14 @@ void traverse_BST_for_f(Set set, SetNode node, TraverseFunc f){
 }
 
 Set set_from_vector(Vector vec, CompareFunc compare) {
+	Vector sorted=vector_create(0, NULL), unsorted=vector_create(0, NULL);
+	vector_insert_last(sorted, vector_node_value(vec, vector_first(vec)));
+	for(VectorNode node =vector_next(vec, vector_first(vec)); node != VECTOR_EOF; node=vector_next(vec, node)){
+		if(vector_node_value(vec, node) >= vector_node_value((sorted), vector_last(sorted)))
+			vector_insert_last(sorted, vector_node_value(vec, node));
+		else
+			vector_insert_last(unsorted, vector_node_value(vec, node));
+	}
 	//Set set= set_create(compare, free);
 	return NULL;
 }
