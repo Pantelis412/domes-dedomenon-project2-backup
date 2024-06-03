@@ -41,19 +41,18 @@ void test_set_from_vector(void) {
 }
 
 void test_set_to_vector(void) {
-	//Δημιουργώ vector και βαζω τα στοιχεία του στο set με τυχαία σειρά
-	Vector vec_test= vector_create(0, NULL);
-	vector_insert_last(vec_test, create_int(2));
-	vector_insert_last(vec_test, create_int(1));
-	vector_insert_last(vec_test, create_int(3));
-	vector_insert_last(vec_test, create_int(0));
-	Set test_set= set_from_vector(vec_test, compare_ints);
-	vector_destroy(vec_test);
+	//Δημιουργώ set και βαζω τα στοιχεία του στο set με τυχαία σειρά
+	Set test_set= set_create(compare_ints, free);
+	set_insert(test_set, create_int(2));
+	set_insert(test_set, create_int(1));
+	set_insert(test_set, create_int(0));
+	set_insert(test_set, create_int(4));
 	// Βάζω τα στοιχεία του set ταξινομημένα σε καινούριο vector
 	Vector vec_new = set_to_vector(test_set);
 	set_destroy(test_set);
 	TEST_ASSERT(vec_new != NULL);
 	TEST_ASSERT(vector_size(vec_new) == 4);
+	TEST_ASSERT(*(int*)vector_node_value(vec_new, vector_first(vec_new))==0);// τσεκάρω ότι το πρώτο στοιχείο είναι το σωστό
 	vector_destroy(vec_new);
 }
 

@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////
 
 #include <stdio.h>
-
+#include <stdlib.h>
 #include "set_utils.h"
 
 
@@ -27,18 +27,37 @@ struct set_node {
 	Pointer value;
 };
 
+void traverse_BST_insert_vector(Vector vector, SetNode node){
+	if (node != NULL){
+		traverse_BST_insert_vector(vector, node->left);
+		vector_insert_last(vector, node->value);
+		traverse_BST_insert_vector(vector, node->right);
+	}
+	return;
+}
 
+void traverse_BST_for_f(Set set, SetNode node, TraverseFunc f){
+	if (node != NULL){
+		traverse_BST_for_f(set, node->left, f);
+		f(set, node->value);
+		traverse_BST_for_f(set, node->right, f);
+	}
+	return;
+}
 
 Set set_from_vector(Vector vec, CompareFunc compare) {
+	//Set set= set_create(compare, free);
 	return NULL;
 }
 
 Vector set_to_vector(Set set) {
-	return NULL;
+	Vector vector= vector_create(0,NULL);
+	traverse_BST_insert_vector(vector, set->root);
+	return vector;
 }
 
 void set_traverse(Set set, TraverseFunc f) {
-
+	traverse_BST_for_f(set, set->root, f);
 }
 
 Set set_merge(Set set1, Set set2, CompareFunc compare) {
