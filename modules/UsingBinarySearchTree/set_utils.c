@@ -45,17 +45,69 @@ void traverse_BST_for_f(Set set, SetNode node, TraverseFunc f){
 	return;
 }
 
+Vector vector_bubble_sort(Vector vector){
+	Pointer temp;
+	for(int i=1; i<=vector_size(vector)-1; i++){
+		for(int j=vector_size(vector) -1; j>=i; j--){
+			if(*(int*)vector_get_at(vector, j-1)>*(int*)vector_get_at(vector, j)){
+				temp=vector_get_at(vector, j);
+				vector_set_at(vector, j, vector_get_at(vector, j-1));
+				vector_set_at(vector, j-1, temp);
+			}
+		}
+	}
+	return vector;
+}
+
+Vector two_vector_merge(Vector vector1, Vector vector2){
+	Vector vector= vector_create(0, NULL);
+	int i=0, j=0;
+	while(i<vector_size(vector1) && j<vector_size(vector2)){
+		if(*(int*)vector_get_at(vector1, i) <= *(int*)vector_get_at(vector2, j)){
+			vector_insert_last(vector, vector_get_at(vector1, i));
+			i++;
+		}
+		else{
+			vector_insert_last(vector, vector_get_at(vector2, j));
+			j++;
+		}
+	}
+	if(i==vector_size(vector1)){
+		while(j<vector_size(vector2)){
+			vector_insert_last(vector, vector_get_at(vector2, j));
+			j++;
+		}
+	}
+	else{
+		while(i<vector_size(vector1)){
+			vector_insert_last(vector, vector_get_at(vector1, i));
+			i++;
+		}
+	}
+	return vector;
+}
+
 Set set_from_vector(Vector vec, CompareFunc compare) {
+	//Διαχωρίζουμε το vector σε 2: ταξινομημένο και μη ταξινομημένο
 	Vector sorted=vector_create(0, NULL), unsorted=vector_create(0, NULL);
 	vector_insert_last(sorted, vector_node_value(vec, vector_first(vec)));
 	for(VectorNode node =vector_next(vec, vector_first(vec)); node != VECTOR_EOF; node=vector_next(vec, node)){
-		if(vector_node_value(vec, node) >= vector_node_value((sorted), vector_last(sorted)))
+		if(*(int*)vector_node_value(vec, node) >= *(int*)vector_node_value((sorted), vector_last(sorted)))
 			vector_insert_last(sorted, vector_node_value(vec, node));
 		else
 			vector_insert_last(unsorted, vector_node_value(vec, node));
 	}
-	//Set set= set_create(compare, free);
-	return NULL;
+	//Ταξινομώ το vector
+	unsorted= vector_bubble_sort(unsorted);
+
+	//Συγχωνεύω τα δύο vectors
+	Vector vector=vector_create(0, NULL);
+	vector= two_vector_merge(sorted, unsorted);
+	for(int i=0; i<=vector_size(vector)-1; i++){
+		printf("%d ", *(int*)vector_get_at(vector, i));
+	}
+	Set set= set_create(compare, free);
+	return set;
 }
 
 Vector set_to_vector(Set set) {
