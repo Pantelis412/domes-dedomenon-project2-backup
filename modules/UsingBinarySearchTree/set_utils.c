@@ -87,6 +87,16 @@ Vector two_vector_merge(Vector vector1, Vector vector2){
 	return vector;
 }
 
+Set create_tree_set(Set set, Vector vector, int first, int last){
+	int mid=(first+last)/2;
+	set_insert(set,vector_get_at(vector, mid));
+	if(first<last){
+		create_tree_set(set, vector, first, mid-1);
+		create_tree_set(set, vector, mid+1, last);
+	}
+	return set;
+}
+
 Set set_from_vector(Vector vec, CompareFunc compare) {
 	//Διαχωρίζουμε το vector σε 2: ταξινομημένο και μη ταξινομημένο
 	Vector sorted=vector_create(0, NULL), unsorted=vector_create(0, NULL);
@@ -103,10 +113,12 @@ Set set_from_vector(Vector vec, CompareFunc compare) {
 	//Συγχωνεύω τα δύο vectors
 	Vector vector=vector_create(0, NULL);
 	vector= two_vector_merge(sorted, unsorted);
-	for(int i=0; i<=vector_size(vector)-1; i++){
-		printf("%d ", *(int*)vector_get_at(vector, i));
-	}
-	Set set= set_create(compare, free);
+	
+	//Δημιουργώ το set από το vector
+	Set set= set_create(compare, NULL);
+	int left=0;
+	int right=vector_size(vector)-1;
+	set = create_tree_set(set, vector, left, right);
 	return set;
 }
 
