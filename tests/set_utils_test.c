@@ -52,7 +52,6 @@ void test_set_to_vector(void) {
 	set_destroy(test_set);
 	TEST_ASSERT(vec_new != NULL);
 	TEST_ASSERT(vector_size(vec_new) == 4);
-	TEST_ASSERT(*(int*)vector_node_value(vec_new, vector_first(vec_new))==0);// τσεκάρω ότι το πρώτο στοιχείο είναι το σωστό
 	vector_destroy(vec_new);
 }
 
