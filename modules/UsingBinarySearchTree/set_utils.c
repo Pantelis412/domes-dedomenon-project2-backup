@@ -133,7 +133,14 @@ void set_traverse(Set set, TraverseFunc f) {
 }
 
 Set set_merge(Set set1, Set set2, CompareFunc compare) {
-	return NULL;
+	Vector vector1=set_to_vector(set1);
+	Vector vector2=set_to_vector(set2);
+	Vector vector=two_vector_merge(vector1, vector2);
+	int left=0;
+	int right=vector_size(vector)-1;
+	Set set=set_create(compare, NULL);
+	set = create_tree_set(set, vector, left, right);
+	return set;
 }
 
 Pointer set_find_k_smallest(Set set, int k) {
