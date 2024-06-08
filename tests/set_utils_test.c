@@ -94,7 +94,7 @@ void test_set_find_k_smallest(void) {
 	set_insert(set, create_int(4));
 	set_insert(set, create_int(12));
 	Pointer test_pointer=set_find_k_smallest(set, 3);
-	TEST_ASSERT(*(int*)test_pointer==9);
+	TEST_ASSERT(*(int*)test_pointer==12);
 	set_destroy(set);
 }
 

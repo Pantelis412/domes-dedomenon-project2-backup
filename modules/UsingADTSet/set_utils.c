@@ -64,7 +64,7 @@ Set set_merge(Set set1, Set set2, CompareFunc compare) {
 
 Pointer set_find_k_smallest(Set set, int k) {
 	SetNode node=set_first(set);
-	for(int i=0; i< k-1; i++){
+	for(int i=0; i< k; i++){
 		node=set_next(set, node);
 	}
 	return set_node_value(set, node);
