@@ -28,6 +28,7 @@ struct set_node {
 	Pointer value;
 };
 
+//Βοηθητικές συναρτήσεις
 void traverse_BST_insert_vector(Vector vector, SetNode node){
 	if (node != NULL){
 		traverse_BST_insert_vector(vector, node->left);
