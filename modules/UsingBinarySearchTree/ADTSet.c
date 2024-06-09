@@ -20,7 +20,8 @@ struct set {
 
 // Ενώ το struct set_node είναι κόμβος ενός Δυαδικού Δέντρου Αναζήτησης
 struct set_node {
-	SetNode left, right;		// Παιδιά
+	SetNode left, right;
+	int children;		// Παιδιά
 	Pointer value;
 };
 
@@ -41,6 +42,7 @@ static SetNode node_create(Pointer value) {
 	node->left = NULL;
 	node->right = NULL;
 	node->value = value;
+	node->children=1;
 	return node;
 }
 
@@ -148,10 +150,12 @@ static SetNode node_insert(SetNode node, CompareFunc compare, Pointer value, boo
 
 	} else if (compare_res < 0) {
 		// value < node->value, συνεχίζουμε αριστερά.
+		node->children++;
 		node->left = node_insert(node->left, compare, value, inserted, old_value);
 
 	} else {
 		// value > node->value, συνεχίζουμε δεξιά
+		node->children++;
 		node->right = node_insert(node->right, compare, value, inserted, old_value);
 	}
 

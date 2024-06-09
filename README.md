@@ -20,7 +20,7 @@ __Α.Μ.__: sdi2300079
 - [x] Άσκηση 3
 - [x] Άσκηση 4
 - [ ] Άσκηση 5
-- [x] Bonus 1
+- [ ] Bonus 1
 - [ ] Bonus 2
 
 ### Documentation

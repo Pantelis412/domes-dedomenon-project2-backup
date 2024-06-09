@@ -23,7 +23,8 @@ struct set {
 };
 
 struct set_node {
-	SetNode left, right;		// Παιδιά
+	SetNode left, right;
+	int children;		// Παιδιά
 	Pointer value;
 };
 
@@ -97,6 +98,8 @@ Set create_tree_set(Set set, Vector vector, int first, int last){
 	return set;
 }
 
+//Τέλος βοηθητικών συναρτήσεων
+
 Set set_from_vector(Vector vec, CompareFunc compare) {
 	//Διαχωρίζουμε το vector σε 2: ταξινομημένο και μη ταξινομημένο
 	Vector sorted=vector_create(0, NULL), unsorted=vector_create(0, NULL);
@@ -143,6 +146,24 @@ Set set_merge(Set set1, Set set2, CompareFunc compare) {
 	return set;
 }
 
+Pointer recursive_finding(SetNode node, int k){
+	int left;
+	if(node->left==NULL)
+		left=0;
+	else
+		left=node->left->children;
+            if(k > left){
+                k -= left +1 ;//αφαιρω και το root
+                return recursive_finding(node->right, k);
+            }
+            else if(k < left){
+                return recursive_finding(node->left, k);
+            }
+	return node->value;
+}
+
+
 Pointer set_find_k_smallest(Set set, int k) {
-	return NULL;
+	Pointer value=recursive_finding(set->root, k);
+	return value;	
 }
