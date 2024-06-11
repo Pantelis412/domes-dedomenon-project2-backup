@@ -9,6 +9,35 @@
 
 #include "set_utils.h"
 
+//Βοηθητική συνάρτηση
+
+Vector two_vector_merge(Vector vector1, Vector vector2){
+	Vector vector= vector_create(0, NULL);
+	int i=0, j=0;
+	while(i<vector_size(vector1) && j<vector_size(vector2)){
+		if(*(int*)vector_get_at(vector1, i) <= *(int*)vector_get_at(vector2, j)){
+			vector_insert_last(vector, vector_get_at(vector1, i));
+			i++;
+		}
+		else{
+			vector_insert_last(vector, vector_get_at(vector2, j));
+			j++;
+		}
+	}
+	if(i==vector_size(vector1)){
+		while(j<vector_size(vector2)){
+			vector_insert_last(vector, vector_get_at(vector2, j));
+			j++;
+		}
+	}
+	else{
+		while(i<vector_size(vector1)){
+			vector_insert_last(vector, vector_get_at(vector1, i));
+			i++;
+		}
+	}
+	return vector;
+}
 
 Set set_from_vector(Vector vec, CompareFunc compare) {
 	Set set = set_create(compare, free);
@@ -35,30 +64,13 @@ void set_traverse(Set set, TraverseFunc f) {
 }
 
 Set set_merge(Set set1, Set set2, CompareFunc compare) {
-	Set set= set_create(compare, NULL);
-	SetNode node1=set_first(set1), node2=set_first(set2);
-	while(node1 != SET_EOF && node2 != SET_EOF ){
-		if(compare(set_node_value(set1, node1), set_node_value(set2, node2)) <= 0 ){
-			set_insert(set, set_node_value(set1, node1));
-			node1=set_next(set1, node1);
-		}
-		else{
-			set_insert(set, set_node_value(set2, node2));
-			node2=set_next(set2, node2);
-		}
-	}
-	if( node1== SET_EOF){
-		while(node2 != SET_EOF ){
-		set_insert(set, set_node_value(set2, node2));
-		node2=set_next(set2, node2);
-		}
-	}
-	else{
-		while(node1 != SET_EOF ){
-		set_insert(set, set_node_value(set1, node1));
-		node1=set_next(set1, node1);
-		}
-	}
+	Vector vector1=set_to_vector(set1);
+	Vector vector2=set_to_vector(set2);
+	Vector vector=two_vector_merge(vector1, vector2);
+	Set set=set_from_vector(vector, compare);
+	vector_destroy(vector1);
+	vector_destroy(vector2);
+	vector_destroy(vector);
 	return set;
 }
 

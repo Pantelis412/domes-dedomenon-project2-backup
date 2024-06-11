@@ -123,6 +123,8 @@ Set set_from_vector(Vector vec, CompareFunc compare) {
 	int left=0;
 	int right=vector_size(vector)-1;
 	set = create_tree_set(set, vector, left, right);
+	vector_destroy(sorted);
+	vector_destroy(unsorted);
 	return set;
 }
 
@@ -137,6 +139,8 @@ void set_traverse(Set set, TraverseFunc f) {
 }
 
 Set set_merge(Set set1, Set set2, CompareFunc compare) {
+	set_set_destroy_value(set1, free);
+	set_set_destroy_value(set2, free);
 	Vector vector1=set_to_vector(set1);
 	Vector vector2=set_to_vector(set2);
 	Vector vector=two_vector_merge(vector1, vector2);
@@ -144,6 +148,9 @@ Set set_merge(Set set1, Set set2, CompareFunc compare) {
 	int right=vector_size(vector)-1;
 	Set set=set_create(compare, NULL);
 	set = create_tree_set(set, vector, left, right);
+	vector_destroy(vector1);
+	vector_destroy(vector2);
+	vector_destroy(vector);
 	return set;
 }
 

@@ -67,13 +67,13 @@ void test_set_traverse(void) {
 }
 
 void test_set_merge(void) {
-	Set set1= set_create(compare_ints, free);
+	Set set1= set_create(compare_ints, NULL);
 	set_insert(set1, create_int(1));
 	set_insert(set1, create_int(4));
 	set_insert(set1, create_int(9));
 	set_insert(set1, create_int(12));
 
-	Set set2= set_create(compare_ints, free);
+	Set set2= set_create(compare_ints, NULL);
 	set_insert(set2, create_int(3));
 	set_insert(set2, create_int(5));
 	set_insert(set2, create_int(9));
